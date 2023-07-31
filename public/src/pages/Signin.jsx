@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/chat.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { registerRoute } from "../utils/APIRoutes";
+import { signinRoute } from "../utils/APIRoutes";
 
-const Register = () => {
+const Signin = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
-    email: "",
     password: "",
-    confirmpassword: "",
   });
 
   const toastOptions = {
@@ -23,13 +21,18 @@ const Register = () => {
     theme: "dark",
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate("/");
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (handleValidation()) {
-      const { password, username, email } = values;
-      const { data } = await axios.post(registerRoute, {
+      const { password, username } = values;
+      const { data } = await axios.post(signinRoute, {
         username,
-        email,
         password,
       });
       if (data.status === false) {
@@ -43,24 +46,12 @@ const Register = () => {
   };
 
   const handleValidation = () => {
-    const { password, confirmpassword, username, email } = values;
-    if (password !== confirmpassword) {
-      toast.error(
-        "Password and Confirm password should be same.",
-        toastOptions
-      );
+    const { password, username } = values;
+    if (password === "") {
+      toast.error("Username and Password is required", toastOptions);
       return false;
-    } else if (username.length < 3) {
-      toast.error("Username should be greater than 3 characters", toastOptions);
-      return false;
-    } else if (password.length < 8) {
-      toast.error(
-        "Password should be equal or greater than 8 characters",
-        toastOptions
-      );
-      return false;
-    } else if (email === "") {
-      toast.error("Email is Required", toastOptions);
+    } else if (username === "") {
+      toast.error("Username and Password is required", toastOptions);
       return false;
     }
     return true;
@@ -82,28 +73,19 @@ const Register = () => {
             placeholder="Username"
             name="username"
             onChange={(e) => handleChange(e)}
+            min={3}
           />
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            onChange={(e) => handleChange(e)}
-          />
+
           <input
             type="password"
             placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
           />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmpassword"
-            onChange={(e) => handleChange(e)}
-          />
-          <button type="submit">Create User</button>
+
+          <button type="submit">Login In</button>
           <span>
-            Already have an account? <Link to="/login">Login</Link>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
           </span>
         </form>
       </FormContainer>
@@ -181,4 +163,4 @@ const FormContainer = styled.div`
   }
 `;
 
-export default Register;
+export default Signin;
