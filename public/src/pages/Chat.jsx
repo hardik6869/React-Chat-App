@@ -9,13 +9,13 @@ import Welcome from "../components/Welcome";
 const Chat = () => {
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(undefined);
-  const [currentChat, setCurrentChat] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState("");
+  const [currentChat, setCurrentChat] = useState("");
 
   useEffect(() => {
     (async () => {
       if (!localStorage.getItem("chat-app-user")) {
-        navigate("signin");
+        navigate("/signin");
       } else {
         setCurrentUser(await JSON.parse(localStorage.getItem("chat-app-user")));
       }
@@ -61,11 +61,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  background-color: #131324;
   .container {
     height: 85vh;
     width: 85vw;
-    background-color: #00000075;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    border-radius: 10px;
     display: grid;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {

@@ -5,7 +5,9 @@ import robot from "../assets/robot.gif";
 const Welcome = ({ currentUser }) => {
   return (
     <Container>
-      <img src={robot} alt="Robot" />
+      <div className="robot-img">
+        <img src={robot} alt="Robot" />
+      </div>
       <h1>
         Welcome, <span>{currentUser.username}</span>
       </h1>
@@ -20,8 +22,17 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   color: white;
-  img: {
-    height: 20rem;
+  background: rgb(0, 0, 0);
+  background: radial-gradient(circle, rgba(0, 0, 0, 1) 0, #ffffff 85%);
+  .robot-img {
+    height: 50%;
+    width: 40%;
+    img: {
+      height: 20rem;
+    }
+  }
+  h1 {
+    padding: 20px;
   }
   span {
     color: #4e0eff;

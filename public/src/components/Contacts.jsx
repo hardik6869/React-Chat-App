@@ -69,7 +69,9 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
-  background-color: #080420;
+  background-color: #9186f3;
+  border-radius: 10px 0 0 10px;
+
   .brand {
     display: flex;
     align-items: center;
@@ -89,6 +91,8 @@ const Container = styled.div`
     flex-direction: column;
     overflow: auto;
     gap: 0.8rem;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -98,7 +102,7 @@ const Container = styled.div`
       }
     }
     .contact {
-      background-color: #ffffff39;
+      background-color: white;
       min-height: 5rem;
       width: 90%;
       cursor: pointer;
@@ -108,6 +112,9 @@ const Container = styled.div`
       align-items: center;
       display: flex;
       transition: 0.5s ease-in-out;
+      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+        rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+        rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
       .avatar {
         img {
           height: 3rem;
@@ -115,21 +122,32 @@ const Container = styled.div`
       }
       .username {
         h3 {
-          color: white;
+          color: black;
         }
       }
     }
     .selected {
-      background-color: #9186f3;
+      background-color: #4e0eff;
+      .username {
+        h3 {
+          color: white;
+        }
+      }
     }
   }
   .current-user {
-    background-color: #0d0d30;
+    background-color: #6666;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     gap: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+      rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+      rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
+      rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+      rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+      rgba(0, 0, 0, 0.09) 0px 32px 16px;
     .avatar {
       img {
         height: 4rem;

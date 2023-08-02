@@ -25,7 +25,7 @@ const Signin = () => {
     if (localStorage.getItem("chat-app-user")) {
       navigate("/");
     }
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,17 +102,17 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  background-color: #131324;
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
+    margin-bottom: 1.5rem;
     img {
       height: 5rem;
     }
     h1 {
-      color: white;
+      color: rgb(90, 184, 255);
       text-transform: uppercase;
     }
   }
@@ -120,7 +120,8 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background: #00000076;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
     border-radius: 2rem;
     padding: 3rem 5rem;
     input {
@@ -128,7 +129,6 @@ const FormContainer = styled.div`
       padding: 1rem;
       border: 0.1rem solid #4e0eff;
       border-radius: 0.4rem;
-      color: white;
       width: 100%;
       font-size: 1rem;
       &:focus {
@@ -147,12 +147,12 @@ const FormContainer = styled.div`
       font-size: 1rem;
       text-transform: uppercase;
       transition: 0.5s ease-in-out;
+      margin: 1rem 0;
       &:hover {
         background-color: #4e0eff;
       }
     }
     span {
-      color: white;
       text-transform: uppercase;
       a {
         color: #4e0eff;
