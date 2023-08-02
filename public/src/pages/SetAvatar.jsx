@@ -14,7 +14,7 @@ const SetAvatar = () => {
 
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
+  const [selectedAvatar, setSelectedAvatar] = useState("");
 
   const toastOptions = {
     autoClose: "8000",
@@ -26,20 +26,19 @@ const SetAvatar = () => {
   useEffect(() => {
     (async () => {
       if (!localStorage.getItem("chat-app-user")) {
-        navigate("/login");
+        navigate("/signin");
       }
     })();
-  });
+  }, []);
 
   const setProfilePicture = async () => {
-    if (selectedAvatar === undefined) {
+    if (selectedAvatar === "") {
       toast.error("Please select an avatar", toastOptions);
     } else {
       const user = await JSON.parse(localStorage.getItem("chat-app-user"));
       const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
         image: avatars[selectedAvatar],
       });
-      console.log(data);
       if (data.isSet) {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
