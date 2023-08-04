@@ -53,7 +53,7 @@ const SetAvatar = () => {
   useEffect(() => {
     (async () => {
       const data = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 5; i++) {
         const image = await axios.get(
           `${api}/${Math.round(Math.random() * 1000)}`
         );
@@ -73,31 +73,33 @@ const SetAvatar = () => {
         </Container>
       ) : (
         <Container>
-          <div className="title-container">
-            <h1>Pick an avatar as your profile picture</h1>
-          </div>
-          <div className="avatars">
-            {avatars.map((avatar, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`avatar ${
-                    selectedAvatar === index ? "selected" : ""
-                  }`}
-                >
-                  <img
-                    src={`data:image/svg+xml;base64,${avatar}`}
-                    alt="avatar"
-                    onClick={() => setSelectedAvatar(index)}
-                  />
-                </div>
-              );
-            })}
-          </div>
+          <div className="main">
+            <div className="title-container">
+              <h1>Pick an avatar as your profile picture</h1>
+            </div>
+            <div className="avatars">
+              {avatars.map((avatar, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`avatar ${
+                      selectedAvatar === index ? "selected" : ""
+                    }`}
+                  >
+                    <img
+                      src={`data:image/svg+xml;base64,${avatar}`}
+                      alt="avatar"
+                      onClick={() => setSelectedAvatar(index)}
+                    />
+                  </div>
+                );
+              })}
+            </div>
 
-          <button className="submit-btn" onClick={setProfilePicture}>
-            Profile Picture
-          </button>
+            <button className="submit-btn" onClick={setProfilePicture}>
+              Profile Picture
+            </button>
+          </div>
         </Container>
       )}
       <ToastContainer />
@@ -111,7 +113,6 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 3rem;
-  background-color: #131324;
   height: 100vh;
   width: 100vw;
   .loader {
@@ -119,41 +120,56 @@ const Container = styled.div`
   }
   .title-container {
     h1 {
-      color: white;
+      color: #997af0;
     }
   }
-  .avatars {
+  .main {
+    box-sizing: border-box;
+    padding: 2rem;
+    border-radius: 0.2rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+      rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+      rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
     display: flex;
-    gap: 2rem;
-    .avatar {
-      border: 0.4rem solid transparent;
-      padding: 0.4rem;
-      border-radius: 5rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .avatars {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: 0.5s ease-in-out;
-      img {
-        height: 6rem;
+      gap: 2rem;
+      .avatar {
+        box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+          rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+        padding: 0.4rem;
+        border-radius: 5rem;
+        margin: 3rem 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s ease-in-out;
+        img {
+          height: 6rem;
+        }
+      }
+      .selected {
+        border: 0.4rem solid #4e0eff43;
+        /* transition: 0.5s ease-in-out border; */
       }
     }
-    .selected {
-      border: 0.4rem solid #4e0eff;
-    }
-  }
-  .submit-btn {
-    background-color: #997af0;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0.4rem;
-    font-size: 1rem;
-    text-transform: uppercase;
-    transition: 0.5s ease-in-out;
-    &:hover {
-      background-color: #4e0eff;
+    .submit-btn {
+      background-color: #997af0;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0.4rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      transition: 0.5s ease-in-out;
+      &:hover {
+        background-color: #4e0eff;
+      }
     }
   }
 `;
