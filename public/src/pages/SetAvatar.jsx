@@ -120,10 +120,12 @@ const Container = styled.div`
   }
   .title-container {
     h1 {
+      text-shadow: 1px 1px 3px #9186f3;
       color: #997af0;
     }
   }
   .main {
+    background-color: #f2f0ff80;
     box-sizing: border-box;
     padding: 2rem;
     border-radius: 0.2rem;

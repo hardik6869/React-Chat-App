@@ -59,6 +59,10 @@ const Container = styled.div`
   align-items: center;
   background-color: #9a86f3;
   padding: 0.5rem 3rem;
+  @media screen and (min-width: 720px) and (max-width: 1080px) {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
   .button-container {
     display: flex;
     align-items: center;
@@ -84,13 +88,13 @@ const Container = styled.div`
     border-radius: 2rem;
     display: flex;
     align-items: center;
-    background-color: white;
+    background-color: #fff;
     input {
       width: 100%;
       background-color: transparent;
       border: none;
       padding-left: 1rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       &::selection {
         background-color: #9186f3;
       }
@@ -100,15 +104,31 @@ const Container = styled.div`
     }
     button {
       padding: 0.3rem 2rem;
-      border-radius: 2rem;
+      border-radius: 3rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #9a86f3;
+      background: #fff;
       border: none;
+      cursor: pointer;
+      &:hover {
+        background-color: #9a86f3;
+        border-radius: 0px;
+        transition: 0.5s;
+        svg {
+          fill: #fff;
+          transition: 1s;
+        }
+      }
+      @media screen and (min-width: 720px) and (max-width: 1080px) {
+        padding: 0.3rem 1rem;
+        svg {
+          font-size: 1rem;
+        }
+      }
       svg {
         font-size: 2rem;
-        color: white;
+        fill: #9a86f3;
       }
     }
   }

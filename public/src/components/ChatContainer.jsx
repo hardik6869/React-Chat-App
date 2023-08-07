@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Logout from "./Logout";
 import ChatInput from "./ChatInput";
 import { getAllMessageRoute, sendMessageRoute } from "../utils/APIRoutes";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-const ChatContainer = ({ currentChat, currentUser }) => {
+const ChatContainer = ({ currentChat, currentUser, socket }) => {
   const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState("");
+  const lastMessageRef = useRef();
+
   useEffect(() => {
-    (async () => {
-      const response = await axios.post(getAllMessageRoute, {
-        from: currentUser._id,
-        to: currentChat._id,
-      });
-      setMessages(response.data);
-    })();
+    if (currentChat) {
+      (async () => {
+        const response = await axios.post(getAllMessageRoute, {
+          from: currentUser._id,
+          to: currentChat._id,
+        });
+        setMessages(response.data);
+      })();
+    }
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
@@ -23,7 +29,32 @@ const ChatContainer = ({ currentChat, currentUser }) => {
       to: currentChat._id,
       message: msg,
     });
+    socket.current.emit("send-message", {
+      to: currentChat._id,
+      from: currentUser._id,
+      message: msg,
+    });
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setMessages(msgs);
   };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("message-receive", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <Container>
       <div className="chat-header">
@@ -40,10 +71,10 @@ const ChatContainer = ({ currentChat, currentUser }) => {
         </div>
         <Logout />
       </div>
-      <div className="chat-message">
+      <div className="chat-messages">
         {messages.map((message, index) => {
           return (
-            <div className="chat-messages" key={index}>
+            <div key={index} ref={lastMessageRef}>
               <div
                 className={`message ${
                   message.fromSelf ? "sended" : "received"
@@ -95,11 +126,20 @@ const Container = styled.div`
     }
   }
   .chat-messages {
+    background-color: #f2f0ff80;
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     overflow: auto;
+    &::-webkit-scrollbar {
+      width: 0.6rem;
+      &-thumb {
+        background-color: #9900ff20;
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+    }
     .message {
       display: flex;
       align-items: center;
@@ -116,12 +156,22 @@ const Container = styled.div`
     justify-content: flex-end;
     .content {
       background-color: #3c00c920;
+      .date {
+        font-size: 1rem;
+        text-align: right;
+        color: #00000071;
+      }
     }
   }
   .received {
     justify-content: flex-start;
     .content {
       background-color: #9900ff20;
+      .date {
+        font-size: 1rem;
+        text-align: right;
+        color: #00000071;
+      }
     }
   }
 `;

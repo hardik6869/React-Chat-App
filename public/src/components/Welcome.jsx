@@ -22,8 +22,9 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   color: white;
-  background: rgb(0, 0, 0);
-  background: radial-gradient(circle, rgba(0, 0, 0, 1) 0, #ffffff 85%);
+  background: radial-gradient(circle, #ebe9ffa6 100%, #ffffff 50%);
+  text-shadow: 2px 2px 5px #9186f3;
+  color: #000000bb;
   .robot-img {
     height: 50%;
     width: 40%;

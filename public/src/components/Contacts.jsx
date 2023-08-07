@@ -23,7 +23,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
         <Container>
           <div className="brand">
             <img src={logo} alt="logo" />
-            <h3>chatty</h3>
+            <h2>chatty</h2>
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
@@ -86,7 +86,8 @@ const Container = styled.div`
     img {
       height: 2rem;
     }
-    h3 {
+    h2 {
+      text-shadow: 4px 4px 10px #000000bb;
       color: white;
       text-transform: uppercase;
     }
@@ -129,6 +130,7 @@ const Container = styled.div`
       }
       .username {
         h3 {
+          text-shadow: 1px 1px 3px #9186f3;
           color: black;
         }
       }
@@ -163,6 +165,7 @@ const Container = styled.div`
     }
     .username {
       h2 {
+        text-shadow: 4px 4px 10px #000000bb;
         color: white;
       }
     }
